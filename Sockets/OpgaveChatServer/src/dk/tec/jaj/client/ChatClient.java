@@ -16,10 +16,11 @@ import javax.swing.*;
 
 public class ChatClient extends JFrame  
 	{
-	   JLabel lblSend, lblReceived;
+	   JLabel lblName, lblSend, lblReceived;
 	   JTextField txtSend; 
+	   JTextField txtName;
 	   JTextArea txtReceived;
-	   JButton btnSend, btnExit;
+	   JButton btnConnect, btnSend, btnExit;
 		
 	   Socket sock;
 	   BufferedReader in;
@@ -42,6 +43,10 @@ public class ChatClient extends JFrame
 	      txtSend.setMaximumSize(txtSend.getPreferredSize());//At den ikke fylder hele højden
 	      txtReceived = new JTextArea(20, 20);
 	      txtReceived.setLineWrap(true);
+	      
+	      lblName = new JLabel("Connect Name");
+	      txtName = new JTextField(10);
+	      btnConnect = new JButton("Connect");
 	      
 	      btnSend = new JButton("Send");
 	      btnExit = new JButton("Exit");

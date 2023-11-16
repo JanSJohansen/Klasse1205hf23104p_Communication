@@ -6,16 +6,16 @@ public class ClientMessage
 	
 	boolean newMessage = false;
 	
-	public String getMessage() {
+	public synchronized String getMessage() {
 		return message;
 	}
-	public void setMessage(String message) {
+	public synchronized void setMessage(String message) {
 		this.message = message;
 	}
-	public boolean isNewMessage() {
+	public synchronized boolean isNewMessage() {
 		return newMessage;
 	}
-	public void setNewMessage(boolean newMessage) {
+	public synchronized void setNewMessage(boolean newMessage) {
 		this.newMessage = newMessage;
 	}
 	

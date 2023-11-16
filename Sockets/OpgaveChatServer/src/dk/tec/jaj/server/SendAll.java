@@ -23,12 +23,11 @@ public class SendAll implements Runnable {
 		
 		while(true)
 		{	
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e1) {			
-				e1.printStackTrace();
-			}
 			
+			// DataMessage skal være trådsikker, ellers fejler det her.
+			// Det går for stærkt!
+			// (Et lille delay fik det også til at virke)
+
 			if(dataMessage.isNewMessage())
 			{		
 				String mess = dataMessage.getMessage();		
