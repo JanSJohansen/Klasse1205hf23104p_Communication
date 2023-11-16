@@ -31,13 +31,23 @@ public class ClientWorker implements Runnable
 		}
 		
 		String message;
+		String name = "N/A";
+		
+		try {
+			name = in.readLine();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		System.out.println(name);
 		
 		while(true)
 		{
 			try {
 				message = in.readLine();
 				
-				dataMessage.setMessage(message);
+				dataMessage.setMessage(name + ": " + message);
 				dataMessage.setNewMessage(true);
 				
 			} catch (IOException e) {

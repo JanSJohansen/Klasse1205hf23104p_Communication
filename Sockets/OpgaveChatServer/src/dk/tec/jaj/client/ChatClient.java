@@ -25,6 +25,8 @@ public class ChatClient extends JFrame
 	   Socket sock;
 	   BufferedReader in;
 	   PrintWriter out;
+	   
+	   boolean connected = false;
 		
 	   public static void main(String[] args) 
 	   {
@@ -55,25 +57,44 @@ public class ChatClient extends JFrame
 	      JScrollPane sp = new JScrollPane(txtReceived); 
 	      sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			
+	      //------------------------------
+	      JPanel pnl0 = new JPanel();
+	      pnl0.add(lblName);
+	      pnl0.add(txtName);
+	      pnl0.add(btnConnect);
+	      
+	      //------------------------------	      
+	      
 	      JPanel pnl1 = new JPanel();
 	      pnl1.setLayout(new GridBagLayout());
 	      GridBagConstraints gs = new GridBagConstraints();
 	      gs.insets = new Insets(10, 10, 10, 10); 
 	      // Indsætter margin omkring cellen, hvilket påvirker hele rækken og kolonnen. 
 	      // Når den bruges på alle bliver det pænt.
+	      
 	      gs.gridx = 1;
 	      gs.gridy = 1;
-	      pnl1.add(lblSend, gs);
+	      pnl1.add(lblName, gs);
 	      gs.gridx = 1;
 	      gs.gridy = 2;
+	      pnl1.add(txtName, gs);
+	      gs.gridx = 1;
+	      gs.gridy = 3;
+	      pnl1.add(btnConnect, gs);
+	      //-------------------------
+	      gs.gridx = 1;
+	      gs.gridy = 4;
+	      pnl1.add(lblSend, gs);
+	      gs.gridx = 1;
+	      gs.gridy = 5;
 	      gs.gridwidth = 3;
 	      pnl1.add(txtSend,gs);
 	      gs.gridwidth = 1;
 	      gs.gridx = 1;
-	      gs.gridy = 3;
+	      gs.gridy = 6;
 	      pnl1.add(btnSend, gs);
 	      gs.gridx = 1;
-	      gs.gridy = 4;     
+	      gs.gridy = 7;     
 	      pnl1.add(btnExit, gs);
 	      
 	      JPanel pnl2 = new JPanel();
@@ -91,17 +112,30 @@ public class ChatClient extends JFrame
 	      pnl2.add(sp, gs);
 			
 	      getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+	      //add(pnl0); //
 	      add(pnl1);
 	      add(pnl2);
 	      
-	      try {
-			sock = new Socket("localhost", 2000);
-			in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			out = new PrintWriter(sock.getOutputStream(),true);
+	  
+	      
+	      btnConnect.addActionListener(new ActionListener() {
 			
-		} catch (IOException e1) {	
-			e1.printStackTrace();
-		}
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+			    try {
+					sock = new Socket("localhost", 2000);
+					in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+					out = new PrintWriter(sock.getOutputStream(),true);
+					
+				} catch (IOException e1) {	
+					e1.printStackTrace();
+				}
+				
+			    out.println(txtName.getText());
+			    
+			}
+		});
 	      
 	      btnSend.addActionListener(new ActionListener() {
 			
@@ -122,10 +156,20 @@ public class ChatClient extends JFrame
 				while(true)
 				{
 					try {
-						message = in.readLine();
-						txtReceived.setText(txtReceived.getText() + message  + "\n" );
-					} catch (IOException e) {
-						e.printStackTrace();
+						Thread.sleep(10);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					if(connected)
+					{
+						try {
+							message = in.readLine();
+							txtReceived.setText(txtReceived.getText() + message  + "\n" );
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
 				}	
 			}
