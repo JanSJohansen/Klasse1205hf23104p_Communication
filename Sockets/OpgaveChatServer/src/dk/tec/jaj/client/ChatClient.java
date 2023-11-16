@@ -128,16 +128,3 @@ public class ChatClient extends JFrame
 	      t.start();
 	 }   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
