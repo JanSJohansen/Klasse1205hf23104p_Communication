@@ -47,6 +47,8 @@ public class ClientWorker implements Runnable
 			try {
 				message = in.readLine();
 				
+				System.out.println(message);
+				
 				dataMessage.setMessage(name + ": " + message);
 				dataMessage.setNewMessage(true);
 				

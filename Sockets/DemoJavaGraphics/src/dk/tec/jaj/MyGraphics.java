@@ -27,8 +27,7 @@ public class MyGraphics extends JFrame implements MouseListener, MouseMotionList
 		
 		g.setColor(Color.YELLOW);
 		g.fillRect(xPos+ 100, yPos + 200, size, size);	
-		
-		
+				
 	}
 
 	public MyGraphics()
